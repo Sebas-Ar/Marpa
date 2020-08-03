@@ -3,8 +3,19 @@ import LightSection from './LightSection';
 import DownloadInfo from '../download/DownloadInfo';
 import NumLight from '../options/NumLight';
 import LightDescription from './LightDescription';
+import { useSelector, connect } from 'react-redux';
+import { mapStateToProps, mapDispatchToProps } from '../../redux/mapToProps/userMapToProps'
+import { useEffect } from 'react';
+import { getDates } from '../../utils/getDates';
 
-const Light = () => {
+const Light = ({ saveValuesDates, changeNumLights }, ctx) => {
+
+    const {light, id} = useSelector(state => state.user)
+
+    useEffect(() => {
+        getDates(saveValuesDates, changeNumLights, ctx, '', 0, light, id)
+
+    }, [light, id])
 
     return (
         <div className="wrapper-light">
@@ -12,8 +23,9 @@ const Light = () => {
             <div>
                 <NumLight />
                 <div className="light">
-
-                    <LightAnimation/>
+                    <section>
+                        <LightAnimation/>
+                    </section>
                     <div className="line"></div>
                     <LightSection />
                 
@@ -54,10 +66,14 @@ const Light = () => {
                     display: grid;
                     grid-template-columns: auto auto;
                 }
+
+                section {
+                    width: 400px;
+                }
             
             `}</style>
         </div>
     )
 }
 
-export default Light
+export default connect(mapStateToProps, mapDispatchToProps)(Light)

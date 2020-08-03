@@ -28,11 +28,11 @@ const handler = async (req, res) => {
             let jwt = ''
 
             if (type === 'admin' && user.type === 'admin') {
-                jwt = sign(claims, "b9860076-d8c9-48ab-b98d-628f560c7b85", { expiresIn: "1y" });
+                jwt = sign(claims, process.env.ADMIN_TOKEN, { expiresIn: "1y" });
             }
 
             if (type === "empresa" && user.type === 'empresa') {
-                jwt = sign(claims, "b30aa0f2-5fa2-4222-a15f-9f8d19bbb634", { expiresIn: "1y" });
+                jwt = sign(claims, process.env.USER_TOKEN, { expiresIn: "1y" });
             }
             
             res.setHeader("Set-Cookie", [

@@ -1,6 +1,6 @@
 import { SAVE_VALUES_DATES, CHANGE_FETCH_DATE, CHANGE_LIGHT, CHANGE_RANGE, CHANGE_NUM_LIGTHS, GET_USER_LIST, GET_ID } from "../actions/userAction";
 
-const userReducer = (state = {dates: [], dateFetch: "", light: 0, range: 0, numLights: [], id: ''}, action) => {
+const userReducer = (state = {dates: [], dateFetch: "", light: '', range: 0, numLights: [], id: ''}, action) => {
 
     switch (action.type) {
         case SAVE_VALUES_DATES:

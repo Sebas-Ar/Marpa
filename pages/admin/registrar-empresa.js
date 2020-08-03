@@ -12,4 +12,4 @@ const registrarEmpresa = () => {
     );
 };
 
-export default withAuth(registrarEmpresa, "b9860076-d8c9-48ab-b98d-628f560c7b85");
+export default withAuth(registrarEmpresa, process.env.ADMIN_TOKEN);

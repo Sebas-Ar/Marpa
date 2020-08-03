@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect, useSelector } from 'react-redux'
 import { mapDispatchToProps, mapStateToProps } from '../../redux/mapToProps/userMapToProps'
 
@@ -7,12 +7,25 @@ const NumLight = ({changeLight}) => {
 
     const { light, numLights } = useSelector((state) => state.user)
 
+    useEffect(() => {
+        if (numLights) {
+            if ((light === '' || light === undefined) && numLights.length !== 0) {
+                changeLight(numLights[0].lightName)
+            }
+        }
+    
+    }, [numLights])
+
     return (
-        <select onChange={(e) => changeLight(parseInt(e.target.value))} value={light}>
+        <select onChange={(e) => changeLight(e.target.value)} value={light ? light.lightName : ''}>
             {
-                numLights.map(option => (
-                    <option key={option} value={option}>Luz {option + 1}</option>
-                ))
+                numLights
+                    ?
+                    numLights.map(num => (
+                        <option key={num.lightName} value={num.lightName}>{num.lightName}</option>
+                    ))
+                    :
+                    ''
             }
 
             <style jsx>{`

@@ -37,6 +37,7 @@ const FindUser = ({desativateFind}) => {
                     width: 100%;
                     height: 100%;
                     background-color: #33333377;
+                    z-index: 1000;
                 }
 
                 .container {
@@ -44,7 +45,6 @@ const FindUser = ({desativateFind}) => {
                     background: white;
                     padding: 35px 30px;
                     border-radius: 30px;
-                    border: 1px solid var(--main-color);
                     
                 }
 

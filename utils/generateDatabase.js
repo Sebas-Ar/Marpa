@@ -1,7 +1,7 @@
 export const data = () => {
     let database = [];
     for (let i = 2020; i < 2021; i++) {
-        for (let j = 7; j <= 7; j++) {
+        for (let j = 7; j <= 8; j++) {
             const month = new Date(i, j, 0).getDate();
             for (let k = 1; k <= month; k++) {
                 for (let l = 0; l < 24; l++) {

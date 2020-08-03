@@ -12,4 +12,4 @@ const corriente = () => {
     );
 }
 
-export default withAuth(corriente, "b30aa0f2-5fa2-4222-a15f-9f8d19bbb634");
+export default withAuth(corriente, process.env.USER_TOKEN);

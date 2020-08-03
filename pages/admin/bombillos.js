@@ -13,4 +13,4 @@ const bombillos = () => {
     );
 }
 
-export default withAuth(bombillos, "b9860076-d8c9-48ab-b98d-628f560c7b85");
+export default withAuth(bombillos, process.env.ADMIN_TOKEN);

@@ -12,4 +12,4 @@ const bombillos = () => {
     );
 }
 
-export default withAuth(bombillos, "b30aa0f2-5fa2-4222-a15f-9f8d19bbb634");
+export default withAuth(bombillos, process.env.USER_TOKEN);

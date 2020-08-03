@@ -21,9 +21,9 @@ const Voltajes = ({ saveValuesDates, changeFetchDate, changeNumLights}, ctx) => 
     const [switchVoltage, setSwitchVoltage] = useState(false)
 
     const { dates, dateFetch, light, range, id } = useSelector((state) => state.user)
-
+    
     useEffect(() => {
-        if (dates.length === 0) {
+        if (dates.length === 0 && (light !== undefined || light !== '')) {
             console.log('llamada 1')
             const now = getTodayDate()
             changeFetchDate(now)
@@ -32,15 +32,14 @@ const Voltajes = ({ saveValuesDates, changeFetchDate, changeNumLights}, ctx) => 
     }, [])
     
     useEffect(() => {
-        if (dateFetch !== "") {
-            console.log(dateFetch)
+        if (dateFetch !== "" && (light !== undefined || light !== '')) {
             getDates(saveValuesDates, changeNumLights, ctx, dateFetch, range, light, id)
             setSwitchVoltage(false)
         }
     }, [dateFetch, light, range, id])
 
     useEffect(() => {
-        if (dates.length !== 0) {
+        if (dates.length !== 0 ) {
             setData(initialState(dates.panelVoltages, dates.dates))
         }
     }, [dates])

@@ -1,12 +1,10 @@
 import axios from "axios";
 import cookies from "next-cookies";
 
-export const getDates = async (saveValuesDates, changeNumLights, ctx, calendar = "", range = 0, light = 0, id = '') => {
-    let lights = []
+export const getDates = async (saveValuesDates, changeNumLights, ctx, calendar = "", range = 0, light = '', id = '') => {
     const url = "/api/user";
     const { authorization, userId } = cookies(ctx);
     const date = calendar.split('-').map(date => parseInt(date))
-
     const fetchDate = {
         year: date[0],
         month: date[1],
@@ -27,11 +25,7 @@ export const getDates = async (saveValuesDates, changeNumLights, ctx, calendar =
             },
         }
     );
-    
-    for (let i = 0; i < response.data.lightNum; i++) {
-        lights.push(i)
-    }
 
-    changeNumLights(lights)
+    changeNumLights(response.data.lightNum)
     saveValuesDates({ dates: response.data.dates });
 };

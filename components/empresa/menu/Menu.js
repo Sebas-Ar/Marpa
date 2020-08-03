@@ -38,6 +38,7 @@ const Menu = ({ link, menuHeader, activateHover, desativateHover }) => {
 
             <style jsx>{`
                 aside {
+                    z-index: 100;
                     box-sizing: border-box;
                     display: grid;
                     grid-template-rows: 1fr 2fr;
@@ -45,6 +46,7 @@ const Menu = ({ link, menuHeader, activateHover, desativateHover }) => {
                     position: fixed;
                     height: 90%;
                     min-height: 415px;
+                    max-height: 650px;
                     top: 50%;
                     transform: translateY(-50%);
                     padding: 10px;

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import Map from '../location/Map';
 
 const RegisterEmpresa = () => {
 
@@ -8,6 +9,7 @@ const RegisterEmpresa = () => {
         lights: [{}],
         type: 'empresa'
     });
+    const [map, setMap] = useState(false)
 
     const addLight = e => {
         e.preventDefault();
@@ -35,21 +37,22 @@ const RegisterEmpresa = () => {
 
     const onChangeLigth = (e, num) => {
         let newData = {...data}
-        newData.lights[num - 1] = Object.assign({}, newData.lights[num - 1], {[e.target.name]: e.target.value})
+        newData.lights[num - 1] = Object.assign({}, newData.lights[num - 1], {[e.target.name]: e.target.value, state: false})
         setData(Object.assign({}, data, {lights: newData.lights}));
     };
 
     const register = async e => {
         e.preventDefault()
-
         const url = '/api/signup'
-
         const result = await axios.post(url, data) 
-
         console.log(result.data)
     }
-    
 
+    const changeMapLocation = (num, lat, lng) => {
+        let newData = {...data}
+        newData.lights[num - 1] = Object.assign({}, newData.lights[num - 1], {lat, lng})
+        setData(Object.assign({}, data, {lights: newData.lights}))
+    }
 
     return (
         <form onSubmit={register}>
@@ -65,8 +68,16 @@ const RegisterEmpresa = () => {
                     lights.map(light => (
                         <div className="light" key={light}>
                             <h4>Luz {light}</h4>
-                            <input onChange={e => onChangeLigth(e, light)} type="text" name="location" placeholder="Ubicación"/>
                             <input onChange={e => onChangeLigth(e, light)} type="text" name="lightName" placeholder="Nombre de la Luz"/>
+                            <br/>
+                            <input onChange={e => onChangeLigth(e, light)} type="number" name="lat" placeholder="Latitud" value={data.lights[light - 1] && data.lights[light - 1].lat ? data.lights[light - 1].lat : ''}/>
+                            <input onChange={e => onChangeLigth(e, light)} type="numbre" name="lng" placeholder="Longitud" value={data.lights[light - 1] && data.lights[light - 1].lng ? data.lights[light - 1].lng : ''}/>
+                            <div className="wrapper-map">
+                                <Map 
+                                    num={light}
+                                    changeMapLocation={changeMapLocation}
+                                />
+                            </div>
                         </div>
                     ))
                 }
@@ -129,7 +140,16 @@ const RegisterEmpresa = () => {
                     display: grid;
                     grid-template-columns: 1fr 1fr;
                     grid-column-gap: 3rem;
+                }
 
+                .btn-map {
+                    justify-self: center;
+                    align-self: center;
+                }
+
+                .wrapper-map {
+                    grid-column: 1/3;
+                    height: 200px;
                 }
 
                 .buttons {

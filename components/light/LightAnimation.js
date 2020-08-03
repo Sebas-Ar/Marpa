@@ -1,37 +1,10 @@
-import React, { useState, useEffect } from 'react'
-
+import React from 'react'
+import { mapDispatchToProps, mapStateToProps } from '../../redux/mapToProps/userMapToProps'
+import { useSelector, connect } from 'react-redux'
 
 const LightAnimation = () => {
 
-    const [light1, setLight1] = useState(false)
-    const [light2, setlight2] = useState(false)
-    const [cont, setCont] = useState(0);
-
-    useEffect(() => {
-        const time = setTimeout(() => {
-            if (cont < 3) {
-                setlight2(!light2)
-                setLight1(!light1)
-                setCont(cont + 1)
-            } else if (cont === 3) {
-                setLight1(true)
-                setlight2(false)
-                setCont(cont + 1)
-            } else if (cont < 8) {
-                setlight2(!light2)
-                setLight1(!light1)
-                setCont(cont + 1)
-            } else {
-                setlight2(true)
-                setLight1(true)
-                setCont(0)
-            }
-            console.log(cont)
-        }, 1000)
-        return () => {
-            clearTimeout(time)
-        }
-    })
+    const {stateLight1, stateLight2} = useSelector(state => state.user.dates)
 
     return (
         <svg viewBox="73.139 92.916 593.903 493.591">
@@ -214,12 +187,12 @@ const LightAnimation = () => {
                                 <rect
                                     x="73.139"
                                     y="431.068"
-                                    fill={light1 ? "#048511" : "#BC181A"}
+                                    fill={stateLight1 ? "#048511" : "#BC181A"}
                                     width="215.514"
                                     height="14.11"
                                 />
                                 <path
-                                    fill={light1 ? "#048511" : "#BC181A"}
+                                    fill={stateLight1 ? "#048511" : "#BC181A"}
                                     d="M180.904,165.77c-0.74,0-1.476,0.01-2.208,0.025V98.344c0-2.999-2.431-5.428-5.429-5.428
 						c-0.002,0-0.009,0-0.009,0c-2.997,0-5.426,2.429-5.426,5.427v68.209C114.481,173,73.139,218.433,73.139,273.523v148.805
 						h215.514V273.523C288.653,214.01,240.408,165.77,180.904,165.77z"
@@ -233,12 +206,12 @@ const LightAnimation = () => {
                                 <rect
                                     x="451.458"
                                     y="431.067"
-                                    fill={light2 ? "#048511" : "#BC181A"}
+                                    fill={stateLight2 ? "#048511" : "#BC181A"}
                                     width="215.514"
                                     height="14.111"
                                 />
                                 <path
-                                    fill={light2 ? "#048511" : "#BC181A"}
+                                    fill={stateLight2 ? "#048511" : "#BC181A"}
                                     d="M451.458,273.523v148.805h215.514V273.523c0-55.09-41.341-100.522-94.691-106.971V98.343
 						c0-2.998-2.43-5.427-5.427-5.427c0,0-0.007,0-0.009,0c-2.998,0-5.43,2.429-5.43,5.428v67.451
 						c-0.731-0.015-1.467-0.025-2.207-0.025C499.704,165.77,451.458,214.01,451.458,273.523z"
@@ -249,12 +222,11 @@ const LightAnimation = () => {
                 </g>
             </g>
             <g id="verde">
-                {/* 048511 */}
                 <g id="Capa_2_22_">
                     <g>
                         <g id="Capa_1-2_31_">
                             <path
-                                fill={light2 ? "#048511" : "#BC181A"}
+                                fill={stateLight2 ? "#048511" : "#BC181A"}
                                 d="M453.505,274.03v146.415h211.3V274.03c0-54.205-40.533-98.909-92.84-105.254l-10.653-0.744
 					c-0.717-0.015-1.438-0.024-2.163-0.024C500.808,168.008,453.505,215.473,453.505,274.03z"
                             />
@@ -267,7 +239,7 @@ const LightAnimation = () => {
                             <rect
                                 x="453.222"
                                 y="432.63"
-                                fill={light2 ? "#048511" : "#BC181A"}
+                                fill={stateLight2 ? "#048511" : "#BC181A"}
                                 width="211.875"
                                 height="10.984"
                             />
@@ -279,7 +251,7 @@ const LightAnimation = () => {
                         <g>
                             <g id="Capa_1-2_29_">
                                 <path
-                                    fill={light2 ? "#048511" : "#BC181A"}
+                                    fill={stateLight2 ? "#048511" : "#BC181A"}
                                     d="M570.555,133.752V97.938c0-1.574-1.565-2.849-3.497-2.849c0,0-0.004,0-0.006,0
 						c-1.933,0-3.498,1.275-3.498,2.85v35.416C563.288,133.35,572.666,133.959,570.555,133.752z"
                                 />
@@ -290,7 +262,7 @@ const LightAnimation = () => {
                         <g>
                             <g id="Capa_1-2_27_">
                                 <path
-                                    fill={light2 ? "#048511" : "#BC181A"}
+                                    fill={stateLight2 ? "#048511" : "#BC181A"}
                                     d="M570.555,169.127v-35.814c0-1.574-1.565-2.849-3.497-2.849c0,0-0.004,0-0.006,0
 						c-1.933,0-3.498,1.275-3.498,2.85v35.416C563.288,168.725,572.666,169.334,570.555,169.127z"
                                 />
@@ -301,12 +273,11 @@ const LightAnimation = () => {
                 <circle fill="#FFFFFF" cx="499.473" cy="229.779" r="9" />
             </g>
             <g id="rojo">
-                {/* #BC181A */}
                 <g id="Capa_2_8_">
                     <g>
                         <g id="Capa_1-2_22_">
                             <path
-                                fill={light1 ? "#048511" : "#BC181A"}
+                                fill={stateLight1 ? "#048511" : "#BC181A"}
                                 d="M180.963,168.008c-0.726,0-1.447,0.01-2.164,0.024l-10.653,0.744
 					c-52.307,6.345-92.839,51.049-92.839,105.254v146.415h211.299V274.03C286.606,215.473,239.303,168.008,180.963,168.008z"
                             />
@@ -319,7 +290,7 @@ const LightAnimation = () => {
                             <rect
                                 x="75.015"
                                 y="432.631"
-                                fill={light1 ? "#048511" : "#BC181A"}
+                                fill={stateLight1 ? "#048511" : "#BC181A"}
                                 width="211.875"
                                 height="10.984"
                             />
@@ -331,7 +302,7 @@ const LightAnimation = () => {
                         <g>
                             <g id="Capa_1-2_19_">
                                 <path
-                                    fill={light1 ? "#048511" : "#BC181A"}
+                                    fill={stateLight1 ? "#048511" : "#BC181A"}
                                     d="M176.808,133.252V97.836c0-1.574-1.565-2.85-3.499-2.85c-0.002,0-0.005,0-0.005,0
 						c-1.932,0-3.498,1.275-3.498,2.849v35.814C167.696,133.857,177.073,133.248,176.808,133.252z"
                                 />
@@ -342,7 +313,7 @@ const LightAnimation = () => {
                         <g>
                             <g id="Capa_1-2_18_">
                                 <path
-                                    fill={light1 ? "#048511" : "#BC181A"}
+                                    fill={stateLight1 ? "#048511" : "#BC181A"}
                                     d="M176.808,168.627v-35.416c0-1.574-1.565-2.85-3.499-2.85c-0.002,0-0.005,0-0.005,0
 						c-1.932,0-3.498,1.275-3.498,2.849v35.814C167.696,169.232,177.073,168.623,176.808,168.627z"
                                 />
@@ -355,11 +326,11 @@ const LightAnimation = () => {
 
             <style jsx>{`
                 svg {
-                    width: 400px;
+                    width: 100%;
                 }
             `}</style>
         </svg>
     )
 }
 
-export default LightAnimation
+export default connect(mapStateToProps, mapDispatchToProps)(LightAnimation)

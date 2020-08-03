@@ -25,7 +25,8 @@ const aggregate = (userFind) => (
             $project: {
                 name: true,
                 NIT: true,
-                email: true
+                email: true,
+                lightsUser: true,
             }
         }
     ]

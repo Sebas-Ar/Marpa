@@ -8,38 +8,34 @@ import { ObjectId } from "mongodb"
 
 const handler = async (req, res) => {
 
-    console.log(req.method)
-
     if (req.method === "POST") {
         const {userId, light} = req.body
-        
-        const lights = await req.db.collection("users").aggregate([
-            {$match: { _id: ObjectId(userId)}},
+        console.log(userId)
+        const [lights] = await req.db.collection("lights").aggregate([
+            {$match: { userId: ObjectId(userId)}},
+            {$match: { lightName: light.lightName }},
             {$project: {
                 _id: false,
-                light: {
-                    $filter: {
-                        input: '$lights.values',
-                        as: 'light',
-                        cond: {}
-                    }
-                }
+                values: true,
             }}
         ]).toArray()
 
         try {
                 
-            const obj = lights[0].light[light].map((e) => e)
+            const obj = lights.values.map((e) => e)
 
             const newWB = xlsx.utils.book_new()
             const newWS = xlsx.utils.json_to_sheet(obj)
+            
+            const fileName = light.lightName.split('').map(letter => letter === ' ' ? '-' : letter ).join('')
 
             xlsx.utils.book_append_sheet(newWB, newWS, "name")
+            
+            xlsx.writeFile(newWB, `${fileName}.xlsx`)
 
-            xlsx.writeFile(newWB, "other.xlsx")
 
-            if (fs.existsSync('other.xlsx')) {
-                fs.renameSync('other.xlsx', 'public/excels/other.xlsx', (err) => {
+            if (fs.existsSync(`${fileName}.xlsx`)) {
+                fs.renameSync(`${fileName}.xlsx`, `public/excels/${fileName}.xlsx`, (err) => {
                     if (err) throw err
                     console.log('funciona')
                 })
@@ -49,13 +45,13 @@ const handler = async (req, res) => {
                 console.log(arch)
             })
 
-            let output = fs.createWriteStream('public/excels/test.zip')
+            let output = fs.createWriteStream(`public/excels/${fileName}.zip`)
             let archive = archiver('zip', { gzip: true, zlib: { level: 9 } })
             archive.on('error', (err) => {throw err})
             archive.pipe(output)
-            archive.file('public/excels/other.xlsx', { name: 'other.xlsx' })
+            archive.file(`public/excels/${fileName}.xlsx`, { name: `${fileName}.xlsx` })
             archive.finalize().then(() => {
-                fs.unlinkSync('public/excels/other.xlsx') 
+                fs.unlinkSync(`public/excels/${fileName}.xlsx`) 
                 res.json({ status: 'ok' })
             })
 
