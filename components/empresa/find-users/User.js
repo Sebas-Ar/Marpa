@@ -36,7 +36,7 @@ const User = ({user, getId, desativateFind}) => {
                         <li key={light.lightName} className="option">
                             <h3 >{light.lightName}</h3>
                             <BtnsActive light={light} user={user}/> 
-                            <div className="connection">Topyc: {changeWords(user.name)}/{changeWords(light.lightName)} | IP:104.154.37.183 | Port: 1883</div>
+                            <div className="connection">Topic: {changeWords(user.name)}/{changeWords(light.lightName)}</div>
                         </li>
                     ))
                 }
