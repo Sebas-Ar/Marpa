@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import Map from '../location/Map';
+import Swal from 'sweetalert2'
+import { useRouter } from 'next/router';
 
 const RegisterEmpresa = () => {
 
@@ -10,6 +12,8 @@ const RegisterEmpresa = () => {
         type: 'empresa'
     });
     const [map, setMap] = useState(false)
+
+    const router = useRouter()
 
     const addLight = e => {
         e.preventDefault();
@@ -46,6 +50,14 @@ const RegisterEmpresa = () => {
         const url = '/api/signup'
         const result = await axios.post(url, data) 
         console.log(result.data)
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'La empresa ha sido registrada',
+            showConfirmButton: false,
+            timer: 1000
+        })
+        router.push('/admin/voltajes')
     }
 
     const changeMapLocation = (num, lat, lng) => {

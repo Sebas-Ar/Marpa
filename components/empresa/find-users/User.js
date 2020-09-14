@@ -15,6 +15,11 @@ const User = ({user, getId, desativateFind}) => {
         desativateFind()
     }
 
+    const changeWords = (word = '') => {
+
+        return word.split('').map(letter => letter === ' ' ? '-' : letter ).join('')
+    }
+
     return (
          <section>
 
@@ -31,6 +36,7 @@ const User = ({user, getId, desativateFind}) => {
                         <li key={light.lightName} className="option">
                             <h3 >{light.lightName}</h3>
                             <BtnsActive light={light} user={user}/> 
+                            <div className="connection">Topyc: {changeWords(user.name)}/{changeWords(light.lightName)} | IP:104.154.37.183 | Port: 1883</div>
                         </li>
                     ))
                 }
@@ -66,6 +72,11 @@ const User = ({user, getId, desativateFind}) => {
                     grid-gap: 10px;
                 }
 
+                .connection {
+                    text-transform: lowercase;
+                    grid-column: 1/3;
+                }
+
 
                 .user-name {
                     font-weight: 600;
@@ -96,7 +107,8 @@ const User = ({user, getId, desativateFind}) => {
                     width: 100%;
                     transition: .5s;
                     overflow: hidden;
-                    height: ${activeOptions ? '30px' : '0'};
+                    height: ${activeOptions ? '50px' : '0'};
+                    margin: 15px 0;
                 }
 
                 .btn-options {

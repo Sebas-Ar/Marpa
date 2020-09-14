@@ -12,7 +12,7 @@ const handler = async (req, res) => {
     await req.db.collection('users').updateOne({_id: ObjectId(userId)}, {$set: {"lightsUser.$[light].state": !state}}, {arrayFilters: [{"light.lightName": light}]})
 
     const option = {
-        username: 'sebas',
+        username: `${userName}`,
         connectTimeout: 4000,
         clientId: `${userName}_${lightName}`,
         keepalive: 60,
@@ -22,7 +22,7 @@ const handler = async (req, res) => {
     const clientMqtt = mqtt.connect('ws://104.154.37.183:8083/mqtt', option)
 
     clientMqtt.on('connect', () => {
-        clientMqtt.subscribe('GPIO', err => {
+        clientMqtt.subscribe(`${userName}/${lightName}`, err => {
             if (err){
                 console.error(err);
             } else {
@@ -32,20 +32,27 @@ const handler = async (req, res) => {
     })
     
     clientMqtt.on('message', (topic, msg) => {
+
         const date = new Date()
-        req.db.collection('lights').updateOne(
-            {lightName: light, userId: ObjectId(userId)},
-            {
-                $push: { 
-                    values: {
-                        date,
-                        batteryVoltage: parseFloat(msg.toString()),
-                        panelVoltage: parseFloat(msg.toString()) - 1,
-                        circuitCurrent: parseFloat(msg.toString()) / 10,
+
+        try {
+            const {batteryVoltage, panelVoltage, circuitCurrent} = JSON.parse(msg.toString())            
+            req.db.collection('lights').updateOne(
+                {lightName: light, userId: ObjectId(userId)},
+                {
+                    $push: { 
+                        values: {
+                            date,
+                            batteryVoltage,
+                            panelVoltage,
+                            circuitCurrent,
+                        }
                     }
                 }
-            }
-        )
+            )
+        } catch (error) {
+            console.error( new Error(error));
+        }
     })
     
     clientMqtt.on('close', async () => {
