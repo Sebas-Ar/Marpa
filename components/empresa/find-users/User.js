@@ -108,7 +108,6 @@ const User = ({user, getId, desativateFind}) => {
                     transition: .5s;
                     overflow: hidden;
                     height: ${activeOptions ? '50px' : '0'};
-                    margin: 15px 0;
                 }
 
                 .btn-options {
