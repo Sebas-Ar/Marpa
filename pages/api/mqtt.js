@@ -36,7 +36,7 @@ const handler = async (req, res) => {
         const date = new Date()
 
         try {
-            const {batteryVoltage, panelVoltage, circuitCurrent} = JSON.parse(msg.toString())            
+            const {batteryVoltage, panelVoltage, circuitCurrent, stateLight1, stateLight2} = JSON.parse(msg.toString())            
             req.db.collection('lights').updateOne(
                 {lightName: light, userId: ObjectId(userId)},
                 {
@@ -47,6 +47,10 @@ const handler = async (req, res) => {
                             panelVoltage,
                             circuitCurrent,
                         }
+                    },
+                    $set: {
+                        stateLight1,
+                        stateLight2
                     }
                 }
             )
