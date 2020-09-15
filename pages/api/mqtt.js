@@ -33,10 +33,11 @@ const handler = async (req, res) => {
     
     clientMqtt.on('message', (topic, msg) => {
 
-        const date = new Date()
+        const date =  new Date().toLocaleString("en-US", {timeZone: "America/Bogota"})
 
         try {
             const {batteryVoltage, panelVoltage, circuitCurrent, stateLight1, stateLight2} = JSON.parse(msg.toString())            
+            console.log(JSON.parse(msg.toString()))
             req.db.collection('lights').updateOne(
                 {lightName: light, userId: ObjectId(userId)},
                 {
