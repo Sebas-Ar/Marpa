@@ -33,7 +33,7 @@ const handler = async (req, res) => {
     
     clientMqtt.on('message', (topic, msg) => {
 
-        const date =  new Date().toLocaleString("en-US", {timeZone: "America/Bogota"})
+        const date = new Date()
 
         try {
             const {batteryVoltage, panelVoltage, circuitCurrent, stateLight1, stateLight2} = JSON.parse(msg.toString())            
