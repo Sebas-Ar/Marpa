@@ -1,13 +1,12 @@
-import React from 'react'
+import React from "react"
 
 const LightDescription = () => {
     return (
         <div className="container">
-            <p>Bombillo Dañado</p>
             <p>Bombillo en Funcionamiento</p>
+            <p>Bombillo Dañado</p>
 
             <style jsx>{`
-            
                 .container {
                     display: grid;
                     grid-template-columns: auto auto;
@@ -21,10 +20,10 @@ const LightDescription = () => {
 
                 p::before {
                     content: "";
+                    background-color: #650c0d;
                     height: 22px;
                     width: 22px;
                     position: absolute;
-                    background-color: #048511;
                     border-radius: 50%;
                     top: 50%;
                     left: -25px;
@@ -32,9 +31,8 @@ const LightDescription = () => {
                 }
 
                 p:nth-child(1)::before {
-                    background-color: #BC181A;
+                    background-color: #ff2023;
                 }
-            
             `}</style>
         </div>
     )

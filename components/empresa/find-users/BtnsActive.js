@@ -1,17 +1,16 @@
-import React, { useState } from 'react'
-import Axios from 'axios';
+import React, { useState } from "react"
+import Axios from "axios"
 
-const BtnsActive = ({light, user}) => {
-
+const BtnsActive = ({ light, user }) => {
     const [state, setState] = useState(light.state)
 
     const activate = async (user, light, userId, state) => {
-        const url = '/api/mqtt'
+        const url = "/api/mqtt"
         const response = await Axios.post(url, {
             user,
             light,
             userId,
-            state
+            state,
         })
         setState(!state)
 
@@ -19,16 +18,25 @@ const BtnsActive = ({light, user}) => {
     }
 
     const desactivate = async (user, light, state) => {
+        const userName = user
+            .split("")
+            .map((letter) => (letter === " " ? "-" : letter))
+            .join("")
+            .toLowerCase()
+        const lightName = light
+            .split("")
+            .map((letter) => (letter === " " ? "-" : letter))
+            .join("")
+            .toLowerCase()
 
-        const userName = user.split('').map(letter => letter === ' ' ? '-' : letter).join('').toLowerCase()
-        const lightName = light.split('').map(letter => letter === ' ' ? '-' : letter).join('').toLowerCase()
-
-        const proxyurl = "https://cors-anywhere.herokuapp.com/";
-        const urlBroker = proxyurl + `http://104.154.37.183:8081/api/v4/clients/${userName}_${lightName}`
+        const proxyurl = "https://cors-anywhere.herokuapp.com/"
+        const urlBroker =
+            proxyurl +
+            `http://104.154.37.183:8081/api/v4/clients/${userName}_${lightName}`
         await Axios.delete(urlBroker, {
             headers: {
-                authorization: 'Basic YWRtaW46cHVibGlj'
-            }
+                authorization: "Basic YWRtaW46cHVibGlj",
+            },
         })
 
         setState(!state)
@@ -38,16 +46,16 @@ const BtnsActive = ({light, user}) => {
         if (state) {
             if (activate) {
                 return {
-                    cursor: 'initial',
-                    background: '#22aa4466'
+                    cursor: "initial",
+                    background: "#22aa4466",
                     /* backgroundColor: 'red' */
                 }
             }
         } else {
             if (!activate) {
                 return {
-                    cursor: 'initial',
-                    background: '#F5253166'
+                    cursor: "initial",
+                    background: "#F5253166",
                 }
             }
         }
@@ -55,21 +63,26 @@ const BtnsActive = ({light, user}) => {
 
     return (
         <div className="btn-wrapper">
-            <button 
-                style={btnState(state, true)} 
-                className="btn-activate" 
-                onClick={() => activate(user.name, light.lightName, user._id, state)}
+            <button
+                style={btnState(state, true)}
+                className="btn-activate"
+                onClick={() =>
+                    activate(user.name, light.lightName, user._id, state)
+                }
                 disabled={state}
-            >Activar</button>
-            <button 
-                style={btnState(state, false)} 
-                className="btn-desactivate" 
+            >
+                Activar
+            </button>
+            <button
+                style={btnState(state, false)}
+                className="btn-desactivate"
                 onClick={() => desactivate(user.name, light.lightName, state)}
                 disabled={!state}
-            >Desactivar</button>
+            >
+                Desactivar
+            </button>
 
             <style jsx>{`
-            
                 .btn-wrapper {
                     display: grid;
                     grid-template-columns: 1fr 1fr;
@@ -81,9 +94,8 @@ const BtnsActive = ({light, user}) => {
                 }
 
                 .btn-desactivate {
-                    background: #F52531;
+                    background: #f52531;
                 }
-            
             `}</style>
         </div>
     )

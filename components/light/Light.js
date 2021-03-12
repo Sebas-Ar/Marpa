@@ -1,44 +1,41 @@
-import LightAnimation from './LightAnimation'
-import LightSection from './LightSection';
-import DownloadInfo from '../download/DownloadInfo';
-import NumLight from '../options/NumLight';
-import LightDescription from './LightDescription';
-import { useSelector, connect } from 'react-redux';
-import { mapStateToProps, mapDispatchToProps } from '../../redux/mapToProps/userMapToProps'
-import { useEffect } from 'react';
-import { getDates } from '../../utils/getDates';
+import LightAnimation from "./LightAnimation"
+import LightSection from "./LightSection"
+import DownloadInfo from "../download/DownloadInfo"
+import NumLight from "../options/NumLight"
+import LightDescription from "./LightDescription"
+import { useSelector, connect } from "react-redux"
+import {
+    mapStateToProps,
+    mapDispatchToProps,
+} from "../../redux/mapToProps/userMapToProps"
+import { useEffect } from "react"
+import { getDates } from "../../utils/getDates"
 
 const Light = ({ saveValuesDates, changeNumLights }, ctx) => {
-
-    const {light, id} = useSelector(state => state.user)
+    const { light, id } = useSelector((state) => state.user)
 
     useEffect(() => {
-        getDates(saveValuesDates, changeNumLights, ctx, '', 0, light, id)
-
+        getDates(saveValuesDates, changeNumLights, ctx, "", 0, light, id)
     }, [light, id])
 
     return (
         <div className="wrapper-light">
-
             <div>
                 <NumLight />
                 <div className="light">
                     <section>
-                        <LightAnimation/>
+                        <LightAnimation />
                     </section>
                     <div className="line"></div>
                     <LightSection />
-                
                 </div>
                 <div className="description">
-                    <DownloadInfo /> 
-                    <LightDescription />
+                    <DownloadInfo />
+                    {/* <LightDescription /> */}
                 </div>
             </div>
-            
 
             <style jsx>{`
-            
                 .wrapper-light {
                     margin: auto;
                     width: 90%;
@@ -59,7 +56,7 @@ const Light = ({ saveValuesDates, changeNumLights }, ctx) => {
                 .line {
                     width: 100%;
                     height: 80%;
-                    background-color: var(--main-color)
+                    background-color: var(--main-color);
                 }
 
                 .description {
@@ -70,7 +67,6 @@ const Light = ({ saveValuesDates, changeNumLights }, ctx) => {
                 section {
                     width: 400px;
                 }
-            
             `}</style>
         </div>
     )
