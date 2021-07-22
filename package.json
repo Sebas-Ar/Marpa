@@ -30,6 +30,6 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
     "sweetalert2": "^10.0.2",
-    "xlsx": "^0.16.3"
+    "xlsx": "^0.17.0"
   }
 }
